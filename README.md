@@ -145,6 +145,7 @@ FROM netflix
 WHERE
 	TO_DATE(date_added, 'Month DD, YYYY') >= CURRENT_DATE - iNTERVAL '5 years';
 ```
+**Objective:**  Track how much content has been added to Netflix in the last five years.
 
 ### 7. Find all the movies/TV shows by director 'Rajiv Chilaka'
 ```sql
@@ -152,14 +153,78 @@ SELECT *
 FROM netflix
 WHERE director ILIKE '%Rajiv Chilaka%';
 ```
+**Objective:** Retrieve all movies or TV shows directed by 'Rajiv Chilaka.'
 
 ### 8. List all TV shows with more than 5 seasons
+```sql
+SELECT *,
+SPLIT_PART(duration, ' ', 1) AS seasons -- (column, 'delimiter', text/no before_delimiter)
+FROM netflix;
+```
+```sql
+SELECT *,
+	SPLIT_PART(duration, ' ', 1) AS seasons
+FROM netflix
+WHERE 
+	type = 'TV Show'
+	AND
+	SPLIT_PART(duration, ' ', 1)::numeric > 5;
+```
+### 9. Count the number of content items in each genre.
+```sql
+SELECT listed_in,
+	COUNT(show_id) AS num_content
+FROM netflix
+GROUP BY 1;
+```
+```sql
+SELECT
+	UNNEST(STRING_TO_ARRAY(listed_in, ',')) AS genre
+FROM netflix;
+```
+```sql
+SELECT
+	UNNEST(STRING_TO_ARRAY(listed_in, ',')) AS genre,
+	COUNT(show_id) AS num_content
+FROM netflix
+GROUP BY 1
+ORDER BY 2 DESC;
+```
+**Objective:**Count how many movies and TV shows fall into each genre.
 
-### 9. Count the number of content items in each genre
-
-### 10. Find each year and the average number of content releases in India on Netflix. Return the top 5 years with the highest average content release!
+### 10. Find each year and the average number of content releases in India on Netflix. Return the top 5 years with the highest average content release.
+```sql
+SELECT TO_DATE(date_added, 'Month DD, YYYY') AS date,
+  *
+  FROM netflix
+  WHERE country = 'India';
+```
+```sql
+  SELECT 
+  	EXTRACT(YEAR FROM TO_DATE(date_added, 'Month DD, YYYY')) AS year,
+	  COUNT(*)
+  FROM netflix
+  WHERE country = 'India'
+  GROUP BY 1;
+```
+```sql
+SELECT 
+  	EXTRACT(YEAR FROM TO_DATE(date_added, 'Month DD, YYYY')) AS year,
+	COUNT(*) AS yearly_content,
+	ROUNd(
+	COUNT(*)::numeric /(SELECT COUNT(*) FROM netflix WHERE country = 'India')::numeric *100, 2) AS avg_content_per_year
+FROM netflix
+WHERE country = 'India'
+GROUP BY 1;
+```
+**Objective:**Identify the years with the highest average content release in India.
 
 ### 11. List all movies that are documentaries
+```sql
+SELECT *
+FROM netflix
+WHERE listed_in ILIKE '%documentaries%';
+```
 
 ### 12. Find all content without a director
 ### 13. Find how many movies actor 'Salman Khan' appeared in the last 10 years
