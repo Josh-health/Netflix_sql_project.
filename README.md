@@ -58,10 +58,6 @@ GROUP BY 1,2
 ORDER BY num_rating DESC
 LIMIT 10;
 ```
-**Objective:** Analyze the most common ratings for both movies and TV shows.
-
-### 3. List all movies released in a specific year (e.g., 2020)
-
 ```sql
 SELECT 
 	type,
@@ -71,9 +67,6 @@ SELECT
 FROM netflix
 GROUP BY 1,2;
 ```
-**Objective:** Find all movies released in a specific year (e.g., 2020) to track Netflix's content distribution over time.
-
-### 4. Find the top 5 countries with the most content on Netflix
 ```sql
 SELECT 
 	type,
@@ -89,6 +82,15 @@ GROUP BY 1,2
 ) AS table_1
 WHERE ranking = 1;
 ```
+**Objective:** Analyze the most common ratings for both movies and TV shows.
+
+### 3. List all movies released in a specific year (e.g., 2020)
+
+
+**Objective:** Find all movies released in a specific year (e.g., 2020) to track Netflix's content distribution over time.
+
+### 4. Find the top 5 countries with the most content on Netflix
+
 ### 5. Identify the longest movie
 ### 1. Find content added in the last 5 years
 ### 1. Find all the movies/TV shows by director 'Rajiv Chilaka'
