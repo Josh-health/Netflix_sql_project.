@@ -294,4 +294,10 @@ Content Distribution
 
 The analysis provides a view of Netflix's content and can help inform content strategy and decision making
 
+### Contact
+For any questions or collaborations, feel free to reach out:
+- Your LinkedIn: www.linkedin.com/in/joshua-egbeyemi-43b641220
+- GitHub: https://github.com/Josh-health
+- Email: jadegbola929@gmail.com
+
 
