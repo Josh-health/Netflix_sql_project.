@@ -282,3 +282,16 @@ GROUP BY 1;
 ```
 **Objective:** Classify Netflix content based on the presence of keywords like "kill" and "violence" in descriptions, labeling them as ‘Good’ or ‘Bad’ content.
 
+### Findings and Conclusion
+The USA contributes the most content to Netflix
+- The top 5 countries producing Netflix content include the USA, India, United Kingdom, Canada, and Japan with the USA being the largest contributor.
+  
+Movies dominate Netflix's content library
+- The dataset shows that movies outnumber TV shows on Netflix, indicating a preference for standalone content rather than series.
+
+Content Distribution
+- The dataset contains a diverse range of movies and TV shows with varying ratings and genres.
+
+The analysis provides a view of Netflix's content and can help inform content strategy and decision making
+
+
