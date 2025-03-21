@@ -190,7 +190,7 @@ FROM netflix
 GROUP BY 1
 ORDER BY 2 DESC;
 ```
-**Objective:**Count how many movies and TV shows fall into each genre.
+**Objective: **Count how many movies and TV shows fall into each genre.
 
 ### 10. Find each year and the average number of content releases in India on Netflix. Return the top 5 years with the highest average content release.
 ```sql
@@ -217,7 +217,7 @@ FROM netflix
 WHERE country = 'India'
 GROUP BY 1;
 ```
-**Objective:**Identify the years with the highest average content release in India.
+**Objective:** Identify the years with the highest average content release in India.
 
 ### 11. List all movies that are documentaries
 ```sql
@@ -225,8 +225,60 @@ SELECT *
 FROM netflix
 WHERE listed_in ILIKE '%documentaries%';
 ```
+**Objective:** Find all movies categorized as documentaries.
 
 ### 12. Find all content without a director
+```sql
+SELECT *
+FROM netflix
+WHERE director IS NULL;
+```
+**Objective:** Identify content that does not have a director listed
+
 ### 13. Find how many movies actor 'Salman Khan' appeared in the last 10 years
+```sql
+SELECT *
+FROM netflix
+WHERE 
+	casts ILIKE '%Salman Khan%'
+	AND
+	release_year > EXTRACT(YEAR FROM CURRENT_DATE) - 10;
+```
+**Objective:** Determine how many movies actor 'Salman Khan' has appeared in over the last 10 years.
+
 ### 14. Find the top 10 actors who have appeared in the highest number of movies produced in India
+```sql
+SELECT * FROM netflix;
+SELECT 
+	UNNEST(STRING_TO_ARRAY(casts, ',')) AS actors,
+	count(*) AS num_actors
+FROM netflix
+WHERE country ILIKE '%india%'
+GROUP BY 1
+ORDER BY 2 DESC
+LIMIT 10;
+```
+**Objective:**  Identify the top 10 actors who have appeared in the most movies produced in India.
+
 ### 15. Categorize the content based on the presence of the keywords 'kill' and 'violence' in the description field. Label content containing these keywords as 'Bad' and all other content as 'Good'. Count how many items fall into each category.
+```sql
+WITH content_cat 
+AS(
+SELECT 
+	*,
+	CASE 
+	WHEN
+		description ILIKE '%kill%' 
+	OR  description ILIKE '%violence%' THEN 'Bad_Content'
+	ELSE 'Good_Content'
+	END category
+FROM netflix
+)
+SELECT 
+	category,
+	COUNT(*) AS total_content
+FROM content_cat
+GROUP BY 1;
+```
+**Objective:** Classify Netflix content based on the presence of keywords like "kill" and "violence" in descriptions, labeling them as ‘Good’ or ‘Bad’ content.
+
